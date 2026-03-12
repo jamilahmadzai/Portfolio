@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "experience": "Erfahrung",
+    "skills": "Fähigkeiten",
+    "projects": "Projekte",
+    "education": "Bildung",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "greeting": "Hallo, ich bin Jamil Ur Rehman Ahmadzai",
+    "title": "Fullstack",
+    "titleHighlight": "Entwickler",
+    "description": "Entwicklung hochperformanter React 19 Frontends und skalierbarer .NET 9 Backend-Systeme.",
+    "contactButton": "Kontaktieren",
+    "downloadCV": "Lebenslauf herunterladen",
+    "stackTooltip": "Mein primärer Entwicklungs-Stack"
+  },
+  "experience": {
+    "title": "Berufserfahrung",
+    "year_one": "Jahr",
+    "year_other": "Jahre",
+    "month_one": "Monat",
+    "month_other": "Monate",
+    "subtitle": "Über 4 Jahre Erfahrung in der Entwicklung skalierbarer Full-Stack-Anwendungen",
+    "view_full_cv": "Vollständigen Lebenslauf ansehen →"
+  },
+  "skills": {
+    "title": "Technische Fähigkeiten",
+    "subtitle": "Technologien, mit denen ich arbeite",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "database": "Datenbank",
+    "devops": "DevOps"
+  },
+  "projects": {
+    "title": "Ausgewählte Projekte",
+    "subtitle": "Skalierbare Systeme in Produktionsumgebungen",
+    "internalProject": "Enterprise-Plattform",
+    "features": "Wichtige technische Lösungen",
+    "techStack": "Kerninfrastruktur",
+    "viewArchitecture": "Architektur ansehen",
+    "dismissAnalysis": "Review schließen",
+    "architecturalAnalysis": "Architektonische Analyse",
+    "keyTechnicalSolutions": "Wichtige technische Lösungen",
+    "coreInfrastructure": "Kerninfrastruktur",
+    "projectContext": "Produktkontext",
+    "organization": "Organisation",
+    "deploymentType": "Bereitstellungstyp",
+    "architecturalFocus": "Architektonischer Impact",
+    "enterpriseInternal": "Unternehmen Produktion",
+    "publicCloud": "Öffentliche Cloud"
+  },
+  "education": {
+    "title": "Bildung",
+    "subtitle": "Akademischer Hintergrund und Qualifikationen"
+  },
+  "contact": {
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Haben Sie ein Projekt im Sinn oder möchten Sie zusammenarbeiten? Kontaktieren Sie mich gerne!",
+    "infoTitle": "Kontaktinformationen",
+    "locationLabel": "Standort",
+    "locationValue": "Paderborn, Deutschland",
+    "emailLabel": "E-Mail",
+    "name": "Name",
+    "email": "E-Mail",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "sendButton": "Nachricht senden",
+    "successMessage": "Nachricht erfolgreich gesendet!",
+    "errorMessage": "Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut."
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten"
+  }
+}

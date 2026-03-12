@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Home",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "education": "Education",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm Jamil Ur Rehman Ahmadzai",
+    "title": "Fullstack",
+    "titleHighlight": "Developer",
+    "description": "Building high-performance React 19 frontends and scalable .NET 9 backend systems.",
+    "contactButton": "Contact Me",
+    "downloadCV": "Download CV",
+    "stackTooltip": "My primary development stack"
+  },
+  "experience": {
+    "title": "Professional Experience",
+    "year_one": "year",
+    "year_other": "years",
+    "month_one": "month",
+    "month_other": "months",
+    "subtitle": "4+ years building scalable full-stack applications",
+    "view_full_cv": "View Full CV →"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "subtitle": "Technologies I work with",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "database": "Database",
+    "devops": "DevOps"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "Systems built at scale in production environments",
+    "internalProject": "Enterprise Platform",
+    "features": "Key Technical Solutions",
+    "techStack": "Core Infrastructure",
+    "viewArchitecture": "View Architecture",
+    "dismissAnalysis": "Close Review",
+    "architecturalAnalysis": "Architectural Analysis",
+    "keyTechnicalSolutions": "Key Technical Solutions",
+    "coreInfrastructure": "Core Infrastructure",
+    "projectContext": "Product Context",
+    "organization": "Organization",
+    "deploymentType": "Deployment Type",
+    "architecturalFocus": "Architectural Impact",
+    "enterpriseInternal": "Enterprise Production",
+    "publicCloud": "Public Cloud"
+  },
+  "education": {
+    "title": "Education",
+    "subtitle": "Academic background and qualifications"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Have a project in mind or want to collaborate? Feel free to reach out!",
+    "infoTitle": "Contact Information",
+    "locationLabel": "Location",
+    "locationValue": "Paderborn, Germany",
+    "emailLabel": "Email",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "sendButton": "Send Message",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Failed to send message. Please try again."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred"
+  }
+}
