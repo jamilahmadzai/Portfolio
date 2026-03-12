@@ -1,4 +1,4 @@
-using Resend.Net;
+using Resend;
 
 namespace Portfolio.API.Services;
 
