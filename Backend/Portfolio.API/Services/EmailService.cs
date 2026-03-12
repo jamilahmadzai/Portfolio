@@ -1,5 +1,4 @@
-using MailKit.Net.Smtp;
-using MimeKit;
+using Resend.Net;
 
 namespace Portfolio.API.Services;
 
@@ -12,39 +11,40 @@ public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
     private readonly ILogger<EmailService> _logger;
+    private readonly IResendClient _resendClient;
 
     public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
     {
         _configuration = configuration;
         _logger = logger;
+        
+        var apiKey = _configuration["Resend:ApiKey"];
+        _resendClient = new ResendClient(apiKey);
     }
 
     public async Task SendContactEmailAsync(string name, string email, string subject, string message)
     {
         try
         {
-            var emailMessage = new MimeMessage();
+            var fromAddress = _configuration["Email:FromAddress"] ?? "noreply@resend.dev";
+            var toAddress = _configuration["Email:ToAddress"];
 
-            emailMessage.From.Add(new MailboxAddress(name, _configuration["Email:FromAddress"]));
-
-            emailMessage.To.Add(new MailboxAddress("Jamil Ur Rehman", _configuration["Email:ToAddress"]));
-
-            emailMessage.ReplyTo.Add(new MailboxAddress(name, email));
-
-            emailMessage.Subject = $"Portfolio Contact: {subject}";
-
-            var bodyBuilder = new BodyBuilder
+            var emailRequest = new SendEmailRequest
             {
-                HtmlBody = $@"
+                From = $"Portfolio <{fromAddress}>",
+                To = new[] { toAddress },
+                ReplyTo = email,
+                Subject = $"Portfolio Contact: {subject}",
+                Html = $@"
                     <h2>New Contact Form Submission</h2>
                     <p><strong>From:</strong> {name}</p>
                     <p><strong>Email:</strong> {email}</p>
                     <p><strong>Subject:</strong> {subject}</p>
                     <hr>
                     <p><strong>Message:</strong></p>
-                    <p>{message.Replace("\n", "<br>")}</p>
+                    <p>{System.Net.WebUtility.HtmlEncode(message)}</p>
                 ",
-                TextBody = $@"
+                Text = $@"
 New Contact Form Submission
 
 From: {name}
@@ -56,43 +56,13 @@ Message:
                 "
             };
 
-            emailMessage.Body = bodyBuilder.ToMessageBody();
+            var result = await _resendClient.SendEmailAsync(emailRequest);
 
-            using var client = new SmtpClient();
-
-            var smtpHost = _configuration["Email:SmtpServer"];
-            var smtpPortStr = _configuration["Email:SmtpPort"];
-            int smtpPort = int.Parse(smtpPortStr ?? "587");
-
-            _logger.LogInformation("Attempting to connect to SMTP server: {Server}:{Port}", smtpHost, smtpPort);
-
-            // Use SSL for port 465, STARTTLS for others (like 587)
-            var secureSocketOptions = smtpPort == 465
-                ? MailKit.Security.SecureSocketOptions.SslOnConnect
-                : MailKit.Security.SecureSocketOptions.StartTls;
-
-            // Set timeout (30 seconds)
-            client.Timeout = 30000;
-
-            await client.ConnectAsync(smtpHost, smtpPort, secureSocketOptions, CancellationToken.None);
-
-            _logger.LogInformation("Connected to SMTP server, attempting authentication...");
-
-            await client.AuthenticateAsync(
-                _configuration["Email:Username"],
-                _configuration["Email:Password"],
-                CancellationToken.None
-            );
-
-            await client.SendAsync(emailMessage, CancellationToken.None);
-
-            await client.DisconnectAsync(true, CancellationToken.None);
-
-            _logger.LogInformation("Contact email sent successfully from {Email}", email);
+            _logger.LogInformation("Contact email sent successfully via Resend from {Email}, Message ID: {MessageId}", email, result.Id);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to send contact email from {Email}", email);
+            _logger.LogError(ex, "Failed to send contact email via Resend from {Email}", email);
             throw;
         }
     }
