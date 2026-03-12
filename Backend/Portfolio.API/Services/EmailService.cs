@@ -60,15 +60,18 @@ Message:
 
             using var client = new SmtpClient();
 
-            _logger.LogInformation("Attempting to connect to SMTP server: {Server}:{Port}",
-                _configuration["Email:SmtpServer"],
-                _configuration["Email:SmtpPort"]);
+            var smtpHost = _configuration["Email:SmtpServer"];
+            var smtpPortStr = _configuration["Email:SmtpPort"];
+            int smtpPort = int.Parse(smtpPortStr ?? "587");
 
-            await client.ConnectAsync(
-                _configuration["Email:SmtpServer"],
-                int.Parse(_configuration["Email:SmtpPort"] ?? "465"),
-                MailKit.Security.SecureSocketOptions.SslOnConnect
-            );
+            _logger.LogInformation("Attempting to connect to SMTP server: {Server}:{Port}", smtpHost, smtpPort);
+
+            // Use SSL for port 465, STARTTLS for others (like 587)
+            var secureSocketOptions = smtpPort == 465 
+                ? MailKit.Security.SecureSocketOptions.SslOnConnect 
+                : MailKit.Security.SecureSocketOptions.StartTls;
+
+            await client.ConnectAsync(smtpHost, smtpPort, secureSocketOptions);
 
             _logger.LogInformation("Connected to SMTP server, attempting authentication...");
 
