@@ -3,11 +3,12 @@
 A full-stack, multilingual portfolio application featuring a .NET 9 Web API backend and a high-performance React frontend.
 
 ## 🚀 Live Demo
-*[Link to your hosted portfolio if available]*
+LINK TO ADD
 
 ## 🛠 Tech Stack
 
 ### Backend
+
 - **Core:** .NET 9 Web API
 - **Database:** PostgreSQL with Entity Framework Core
 - **Messaging:** MailKit & MimeKit (SMTP integration for contact form)
@@ -17,6 +18,7 @@ A full-stack, multilingual portfolio application featuring a .NET 9 Web API back
   - Swagger/OpenAPI documentation
 
 ### Frontend
+
 - **Core:** React 18 + TypeScript + Vite
 - **Styling:** Material UI (MUI) & Tailwind CSS
 - **Animations:** Framer Motion (for smooth transitions and timeline effects)
@@ -24,6 +26,7 @@ A full-stack, multilingual portfolio application featuring a .NET 9 Web API back
 - **State Management:** React Context API (Theme & Language management)
 
 ## ✨ Key Features
+
 - **Dynamic Timeline:** Smoothly animated professional experience and project timeline.
 - **Multilingual Support:** Fully translated interface (English and German).
 - **Contact System:** Integrated contact form that stores messages in DB and sends real-time email notifications.
@@ -34,22 +37,26 @@ A full-stack, multilingual portfolio application featuring a .NET 9 Web API back
 ## 📦 Getting Started
 
 ### Prerequisites
+
 - .NET 9 SDK
 - Node.js (v18+)
 - PostgreSQL
 
 ### Backend Setup
+
 1. Navigate to the Backend folder: `cd Backend`
 2. Update `appsettings.json` with your database and SMTP credentials.
 3. Run migrations: `dotnet ef database update`
 4. Start the server: `dotnet run --project Portfolio.API`
 
 ### Frontend Setup
+
 1. Navigate to the Frontend folder: `cd Frontend`
 2. Install dependencies: `npm install`
 3. Start the dev server: `npm run dev`
 
 ## 📁 Project Structure
+
 ```text
 Portfolio/
 ├── Backend/                # .NET 9 Web API
@@ -64,7 +71,9 @@ Portfolio/
 ```
 
 ## 📄 License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
+
 Created by [Jamil Ur Rehman](https://github.com/jamilahmadzai)
