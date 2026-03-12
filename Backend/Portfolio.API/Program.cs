@@ -4,7 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Try to get connection string from appsettings.json or environment variable
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// If not found, check for Railway's DATABASE_URL environment variable
+if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = builder.Configuration["DATABASE_URL"];
+}
 
 // If it's a Railway URL starting with postgresql://, parse it manually
 if (connectionString?.StartsWith("postgresql://") == true)
