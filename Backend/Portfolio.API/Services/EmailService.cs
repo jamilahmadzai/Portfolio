@@ -67,22 +67,26 @@ Message:
             _logger.LogInformation("Attempting to connect to SMTP server: {Server}:{Port}", smtpHost, smtpPort);
 
             // Use SSL for port 465, STARTTLS for others (like 587)
-            var secureSocketOptions = smtpPort == 465 
-                ? MailKit.Security.SecureSocketOptions.SslOnConnect 
+            var secureSocketOptions = smtpPort == 465
+                ? MailKit.Security.SecureSocketOptions.SslOnConnect
                 : MailKit.Security.SecureSocketOptions.StartTls;
 
-            await client.ConnectAsync(smtpHost, smtpPort, secureSocketOptions);
+            // Set timeout (30 seconds)
+            client.Timeout = 30000;
+
+            await client.ConnectAsync(smtpHost, smtpPort, secureSocketOptions, CancellationToken.None);
 
             _logger.LogInformation("Connected to SMTP server, attempting authentication...");
 
             await client.AuthenticateAsync(
                 _configuration["Email:Username"],
-                _configuration["Email:Password"]
+                _configuration["Email:Password"],
+                CancellationToken.None
             );
 
-            await client.SendAsync(emailMessage);
+            await client.SendAsync(emailMessage, CancellationToken.None);
 
-            await client.DisconnectAsync(true);
+            await client.DisconnectAsync(true, CancellationToken.None);
 
             _logger.LogInformation("Contact email sent successfully from {Email}", email);
         }
