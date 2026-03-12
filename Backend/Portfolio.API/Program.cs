@@ -42,13 +42,18 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<PortfolioDbContext>();
-
-    // Automatically migrate database
-    context.Database.Migrate();
-
-    Seeder.Seed(context);
+    try
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<PortfolioDbContext>();
+        context.Database.Migrate();
+        Seeder.Seed(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+    }
 }
 
 app.Run();
