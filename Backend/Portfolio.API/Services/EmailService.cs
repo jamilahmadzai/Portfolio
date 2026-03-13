@@ -1,4 +1,5 @@
 using Resend;
+using System.Net.Mail;
 
 namespace Portfolio.API.Services;
 
@@ -11,7 +12,7 @@ public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
     private readonly ILogger<EmailService> _logger;
-    private readonly IResendClient _resendClient;
+    private readonly ResendClient _resendClient;
 
     public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
     {
@@ -32,7 +33,7 @@ public class EmailService : IEmailService
             var emailRequest = new SendEmailRequest
             {
                 From = $"Portfolio <{fromAddress}>",
-                To = new[] { toAddress },
+                To = new List<string> { toAddress },
                 ReplyTo = email,
                 Subject = $"Portfolio Contact: {subject}",
                 Html = $@"
