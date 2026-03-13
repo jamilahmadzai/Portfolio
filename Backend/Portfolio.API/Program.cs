@@ -33,8 +33,13 @@ builder.Services.AddOptions();
 builder.Services.AddHttpClient<Resend.IResend, Resend.ResendClient>((sp, client) =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
-    var key = config["Resend:ApiKey"] ?? config["Resend__ApiKey"];
-    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", key);
+    // Try both standard and flat formats for safety
+    var key = config["Resend:ApiKey"] ?? config["Resend__ApiKey"] ?? Environment.GetEnvironmentVariable("Resend__ApiKey");
+    
+    if (!string.IsNullOrEmpty(key))
+    {
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", key.Trim());
+    }
 });
 
 builder.Services.AddScoped<Portfolio.API.Services.IEmailService, Portfolio.API.Services.EmailService>();
