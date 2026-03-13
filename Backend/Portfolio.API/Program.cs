@@ -29,9 +29,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Resend
-builder.Services.AddHttpClient<Resend.IResend, Resend.ResendClient>(client =>
+builder.Services.AddOptions();
+builder.Services.AddHttpClient<Resend.IResend, Resend.ResendClient>((sp, client) =>
 {
-    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", builder.Configuration["Resend:ApiKey"]);
+    var config = sp.GetRequiredService<IConfiguration>();
+    var key = config["Resend:ApiKey"] ?? config["Resend__ApiKey"];
+    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", key);
 });
 
 builder.Services.AddScoped<Portfolio.API.Services.IEmailService, Portfolio.API.Services.EmailService>();
