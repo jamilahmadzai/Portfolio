@@ -1,5 +1,4 @@
 using Resend;
-using System.Net.Mail;
 
 namespace Portfolio.API.Services;
 
@@ -12,54 +11,41 @@ public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
     private readonly ILogger<EmailService> _logger;
-    private readonly ResendClient _resendClient;
+    private readonly IResend _resend;
 
-    public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
+    public EmailService(IConfiguration configuration, ILogger<EmailService> logger, IResend resend)
     {
         _configuration = configuration;
         _logger = logger;
-        
-        var apiKey = _configuration["Resend:ApiKey"];
-        _resendClient = new ResendClient(apiKey);
+        _resend = resend;
     }
 
     public async Task SendContactEmailAsync(string name, string email, string subject, string message)
     {
         try
         {
-            var fromAddress = _configuration["Email:FromAddress"] ?? "noreply@resend.dev";
+            var fromAddress = _configuration["Email:FromAddress"] ?? "onboarding@resend.dev";
             var toAddress = _configuration["Email:ToAddress"];
 
-            var emailRequest = new SendEmailRequest
+            var emailMessage = new EmailMessage
             {
                 From = $"Portfolio <{fromAddress}>",
-                To = new List<string> { toAddress },
-                ReplyTo = email,
+                To = { toAddress ?? throw new InvalidOperationException("Email:ToAddress is not configured.") },
                 Subject = $"Portfolio Contact: {subject}",
-                Html = $@"
+                HtmlBody = $@"
                     <h2>New Contact Form Submission</h2>
                     <p><strong>From:</strong> {name}</p>
                     <p><strong>Email:</strong> {email}</p>
                     <p><strong>Subject:</strong> {subject}</p>
                     <hr>
                     <p><strong>Message:</strong></p>
-                    <p>{System.Net.WebUtility.HtmlEncode(message)}</p>
-                ",
-                Text = $@"
-New Contact Form Submission
-
-From: {name}
-Email: {email}
-Subject: {subject}
-
-Message:
-{message}
+                    <p>{System.Net.WebUtility.HtmlEncode(message).Replace("\n", "<br>")}</p>
                 "
             };
 
-            var result = await _resendClient.SendEmailAsync(emailRequest);
+            await _resend.EmailSendAsync(emailMessage);
 
-            _logger.LogInformation("Contact email sent successfully via Resend from {Email}, Message ID: {MessageId}", email, result.Id);
+            _logger.LogInformation("Contact email sent successfully via Resend from {Email}", email);
         }
         catch (Exception ex)
         {

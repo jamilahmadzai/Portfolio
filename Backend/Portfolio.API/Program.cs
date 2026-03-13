@@ -28,6 +28,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add Resend
+builder.Services.AddHttpClient<Resend.IResend, Resend.ResendClient>(client =>
+{
+    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", builder.Configuration["Resend:ApiKey"]);
+});
+
 builder.Services.AddScoped<Portfolio.API.Services.IEmailService, Portfolio.API.Services.EmailService>();
 
 builder.Services.AddCors(options =>
