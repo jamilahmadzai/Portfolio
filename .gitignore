@@ -28,6 +28,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .eslintcache
-
-# Local setup / Guides
-EMAIL_SETUP_GUIDE.md
