@@ -29,13 +29,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Resend
-builder.Services.AddOptions();
-builder.Services.AddHttpClient<Resend.IResend, Resend.ResendClient>((sp, client) =>
+builder.Services.AddHttpClient<Resend.IResend, Resend.ResendClient>((client) =>
 {
-    var config = sp.GetRequiredService<IConfiguration>();
-    // Try both standard and flat formats for safety
-    var key = config["Resend:ApiKey"] ?? config["Resend__ApiKey"] ?? Environment.GetEnvironmentVariable("Resend__ApiKey");
-    
+    var key = builder.Configuration["Resend:ApiKey"] ?? builder.Configuration["Resend__ApiKey"];
     if (!string.IsNullOrEmpty(key))
     {
         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", key.Trim());
