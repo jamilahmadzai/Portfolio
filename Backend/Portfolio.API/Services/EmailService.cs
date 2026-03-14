@@ -22,15 +22,22 @@ public class EmailService : IEmailService
 
     public async Task SendContactEmailAsync(string name, string email, string subject, string message)
     {
-        var fromAddress = _configuration["Email:FromAddress"] ?? "onboarding@resend.dev";
-        var toAddress = _configuration["Email:ToAddress"] ?? throw new InvalidOperationException("Email:ToAddress is not configured.");
-        
         try
         {
+            var fromAddress = _configuration["Email:FromAddress"] ?? "onboarding@resend.dev";
+            var toAddress = _configuration["Email:ToAddress"];
+
+            if (string.IsNullOrEmpty(toAddress))
+            {
+                _logger.LogWarning("Email:ToAddress not configured, skipping email notification");
+                return;
+            }
+
             var emailMessage = new EmailMessage
             {
                 From = $"Portfolio <{fromAddress}>",
                 To = { toAddress },
+                ReplyTo = email,
                 Subject = $"Portfolio Contact: {subject}",
                 HtmlBody = $@"
                     <h2>New Contact Form Submission</h2>
@@ -44,13 +51,12 @@ public class EmailService : IEmailService
             };
 
             await _resend.EmailSendAsync(emailMessage);
-
-            _logger.LogInformation("Contact email sent successfully via Resend from {Email}", email);
+            _logger.LogInformation("Contact email sent successfully via Resend");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to send contact email via Resend to {ToAddress}. Error: {Message}", toAddress, ex.Message);
-            throw;
+            // Log but don't throw - email is optional, message is already saved to database
+            _logger.LogWarning(ex, "Email notification failed (message saved to database)");
         }
     }
 }

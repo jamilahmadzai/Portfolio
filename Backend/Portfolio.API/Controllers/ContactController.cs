@@ -33,22 +33,17 @@ public class ContactController : ControllerBase
 
         try
         {
+            // Save message to database
             _context.ContactMessages.Add(message);
             await _context.SaveChangesAsync();
 
-            try 
-            {
-                await _emailService.SendContactEmailAsync(
-                    message.Name,
-                    message.Email,
-                    message.Subject,
-                    message.Message
-                );
-            }
-            catch (Exception emailEx)
-            {
-                _logger.LogError(emailEx, "Database saved but email notification failed.");
-            }
+            // Send email notification (optional, fails gracefully)
+            await _emailService.SendContactEmailAsync(
+                message.Name,
+                message.Email,
+                message.Subject,
+                message.Message
+            );
 
             return Ok(new { message = "Message received successfully!", id = message.Id });
         }
