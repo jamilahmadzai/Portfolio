@@ -20,7 +20,7 @@ import {
   TimelineOppositeContent,
 } from "@mui/lab";
 import { motion } from "framer-motion";
-import { getExperience, type ExperienceData } from "../services/api";
+import { getExperience, downloadResume, type ExperienceData } from "../services/api";
 import { useTranslation } from "react-i18next";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -78,20 +78,9 @@ export const Experience = () => {
 
   const handleDownloadCV = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5015/api";
-      const response = await fetch(`${baseUrl}/resume/download`);
-      if (!response.ok) throw new Error("Failed");
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "Jamil_Ur_Rehman_CV.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      await downloadResume();
     } catch (e) {
-      console.error("Download failed:", e);
+      console.error("Experience: Download failed", e);
     }
   };
 

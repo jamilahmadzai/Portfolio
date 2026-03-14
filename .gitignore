@@ -4,6 +4,9 @@
 .LSOverride
 Thumbs.db
 
+# Private Docs
+DEPLOYMENT_INFO.md
+
 # .NET
 bin/
 obj/

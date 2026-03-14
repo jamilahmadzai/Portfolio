@@ -95,3 +95,22 @@ export const getEducation = async (lang?: string): Promise<EducationData[]> => {
 export const sendMessage = async (data: ContactMessage): Promise<void> => {
   await api.post("/contact", data);
 };
+
+export const downloadResume = async (): Promise<void> => {
+  try {
+    const response = await fetch(`${API_URL}/resume/download`);
+    if (!response.ok) throw new Error("Download failed");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Jamil_Ur_Rehman_CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Download failed:", error);
+    throw error;
+  }
+};

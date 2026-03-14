@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import DownloadIcon from "@mui/icons-material/Download";
 import { useTranslation } from "react-i18next";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { downloadResume } from "../services/api";
 
 // --- Typing Component for Code Block ---
 const TypingCode = ({ isDark }: { isDark: boolean }) => {
@@ -122,20 +123,9 @@ export const Hero = () => {
 
   const handleDownloadCV = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5015/api";
-      const response = await fetch(`${baseUrl}/resume/download`);
-      if (!response.ok) throw new Error("Failed");
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "Jamil_Ur_Rehman_CV.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      await downloadResume();
     } catch (e) {
-      console.error("Download failed:", e);
+      console.error("Hero: Download failed", e);
     }
   };
 
