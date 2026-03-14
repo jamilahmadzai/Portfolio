@@ -83,7 +83,6 @@ export const Contact = () => {
       setSnackOpen(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      console.error("Failed to send message:", error);
       setSnackError(true);
     } finally {
       setIsSubmitting(false);
@@ -513,7 +512,7 @@ export const Contact = () => {
                       <TextField
                         fullWidth
                         name="name"
-                        label="Full Name"
+                        label={t("contact.nameLabel")}
                         variant="outlined"
                         required
                         value={formData.name}
@@ -526,7 +525,7 @@ export const Contact = () => {
                       <TextField
                         fullWidth
                         name="email"
-                        label="Email Address"
+                        label={t("contact.emailInputLabel")}
                         type="email"
                         variant="outlined"
                         required
@@ -538,10 +537,10 @@ export const Contact = () => {
                     </Grid>
                     <Grid size={{ xs: 12 }}>
                       <FormControl fullWidth required sx={inputSx(accentColor)}>
-                        <InputLabel>I'm reaching out about…</InputLabel>
+                        <InputLabel>{t("contact.subjectLabel")}</InputLabel>
                         <Select
                           value={formData.subject}
-                          label="I'm reaching out about…"
+                          label={t("contact.subjectLabel")}
                           onChange={handleSubjectChange}
                           sx={{ borderRadius: "14px" }}
                         >
@@ -557,7 +556,7 @@ export const Contact = () => {
                       <TextField
                         fullWidth
                         name="message"
-                        label="Your Message"
+                        label={t("contact.messageLabel")}
                         multiline
                         rows={5}
                         variant="outlined"
@@ -649,7 +648,7 @@ export const Contact = () => {
             boxShadow: "0 10px 30px rgba(34,197,94,0.25)",
           }}
         >
-          Message sent! I'll get back to you within 24–48 hours. 🚀
+          {t("contact.successMessage")}
         </Alert>
       </Snackbar>
 
@@ -666,7 +665,7 @@ export const Contact = () => {
           variant="filled"
           sx={{ borderRadius: "14px", fontWeight: 700 }}
         >
-          Something went wrong. Please try emailing me directly.
+          {t("contact.errorMessage")}
         </Alert>
       </Snackbar>
     </Box>

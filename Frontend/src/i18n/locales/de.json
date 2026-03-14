@@ -27,11 +27,7 @@
   },
   "skills": {
     "title": "Technische Fähigkeiten",
-    "subtitle": "Technologien, mit denen ich arbeite",
-    "frontend": "Frontend",
-    "backend": "Backend",
-    "database": "Datenbank",
-    "devops": "DevOps"
+    "subtitle": "Technologien, mit denen ich arbeite"
   },
   "projects": {
     "title": "Ausgewählte Projekte",
@@ -62,16 +58,12 @@
     "locationLabel": "Standort",
     "locationValue": "Paderborn, Deutschland",
     "emailLabel": "E-Mail",
-    "name": "Name",
-    "email": "E-Mail",
-    "subject": "Betreff",
-    "message": "Nachricht",
+    "nameLabel": "Vollständiger Name",
+    "emailInputLabel": "E-Mail-Adresse",
+    "subjectLabel": "Ich melde mich bezüglich...",
+    "messageLabel": "Ihre Nachricht",
     "sendButton": "Nachricht senden",
     "successMessage": "Nachricht erfolgreich gesendet!",
     "errorMessage": "Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut."
-  },
-  "common": {
-    "loading": "Laden...",
-    "error": "Ein Fehler ist aufgetreten"
   }
 }

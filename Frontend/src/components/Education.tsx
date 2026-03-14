@@ -40,7 +40,7 @@ export const Education = () => {
         });
         setEducation(sortedData);
       } catch (error) {
-        console.error("Failed to fetch education data:", error);
+        // Failed silently
       }
     };
     fetchData();

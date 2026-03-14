@@ -92,7 +92,7 @@ export const Skills = () => {
         const data = await getSkills(i18n.language);
         setSkills(data || []);
       } catch (error) {
-        console.error("Failed to fetch skills:", error);
+        // Failed silently
       }
     };
     fetchSkills();

@@ -1,5 +1,4 @@
 using Portfolio.API.Data;
-using Portfolio.API.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

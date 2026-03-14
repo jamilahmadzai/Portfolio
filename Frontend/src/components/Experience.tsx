@@ -80,7 +80,7 @@ export const Experience = () => {
     try {
       await downloadResume();
     } catch (e) {
-      console.error("Experience: Download failed", e);
+      // Failed silently
     }
   };
 
@@ -97,8 +97,8 @@ export const Experience = () => {
           return getStart(b.period).getTime() - getStart(a.period).getTime();
         });
         setExperiences(sorted);
-      } catch (e) {
-        console.error("Failed to fetch experiences:", e);
+      } catch (error) {
+        // Failed silently
       }
     };
     fetchData();

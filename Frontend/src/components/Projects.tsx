@@ -51,7 +51,7 @@ export const Projects = () => {
         const data = await getProjects(i18n.language);
         setProjects(data);
       } catch (error) {
-        console.error("Failed to fetch projects:", error);
+        // Failed silently
       }
     };
     fetchData();

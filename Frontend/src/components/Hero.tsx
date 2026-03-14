@@ -125,7 +125,7 @@ export const Hero = () => {
     try {
       await downloadResume();
     } catch (e) {
-      console.error("Hero: Download failed", e);
+      // Failed silently
     }
   };
 
